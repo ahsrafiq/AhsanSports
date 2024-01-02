@@ -2,6 +2,7 @@
 using AhsanSports.Models.Domain;
 using AhsanSports.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AhsanSports.Controllers
 {
@@ -33,7 +34,27 @@ namespace AhsanSports.Controllers
             itemsDbContext.Add(item);
             itemsDbContext.SaveChanges();
 
-            return View("Add");
+            return RedirectToAction("ViewItems");
+        }
+
+        [HttpGet]
+        public IActionResult ViewItems()
+        {
+            var viewItems = itemsDbContext.Item.ToList();
+            return View(viewItems);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            var itemToDelete = itemsDbContext.Item.Find(id);
+            if (itemToDelete != null)
+            {
+                itemsDbContext.Item.Remove(itemToDelete);
+                itemsDbContext.SaveChanges();
+            }
+
+            return RedirectToAction("ViewItems");
         }
     }
 }
