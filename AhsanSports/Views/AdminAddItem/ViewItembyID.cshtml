@@ -1,8 +1,5 @@
-﻿@{
-}
-
-@*@model AhsanSports.Models.Domain.Items*@
-@model List<AhsanSports.Models.Domain.Items>
+﻿@*@model AhsanSports.Models.Domain.Items*@
+@model AhsanSports.Models.Domain.Items
 
 <style>
     table {
@@ -30,12 +27,15 @@
 
 <div class=" --bs-primary-border-subtle ">
     <div class="container">
-        <h1>Add New Item - Only Admin</h1>
+        <h1>Edit Item - Only Admin</h1>
     </div>
 </div>
 
-<form method="post">
+
+
+<form method="post" asp-action="EditItem" asp-controller="AdminAddItem">
     <div class="mb-3">
+        <input type="hidden" name="Id" asp-for="Id" />
         <label for="InputName" class="form-label">Product Name</label>
         <input type="text" class="form-control" id="InputName" asp-for="Name">
     </div>
@@ -49,4 +49,3 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-

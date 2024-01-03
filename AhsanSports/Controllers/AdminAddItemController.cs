@@ -56,5 +56,35 @@ namespace AhsanSports.Controllers
 
             return RedirectToAction("ViewItems");
         }
+
+        [HttpGet]
+        public IActionResult ViewItembyID(Guid id)
+        {
+            var item = itemsDbContext.Item.Find(id);
+            if (item != null)
+            {
+                return View(item);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditItem(Items request)
+        {
+            var toUpdateItem = itemsDbContext.Item.Find(request.Id);
+            if(toUpdateItem != null)
+            {
+                toUpdateItem.Name = request.Name;
+                toUpdateItem.Price = request.Price;
+                toUpdateItem.IsAvailable = request.IsAvailable;
+            }
+
+            itemsDbContext.SaveChanges();
+
+            return RedirectToAction("ViewItems");
+        }
     }
 }
